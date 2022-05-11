@@ -105,7 +105,7 @@ def check_tokens():
 def main():
     """Основная логика работы бота."""
     STATUS_MESSAGE = {}
-    ERROR_MESSAGE = {}
+    ERROR_MESSAGE = ''
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     if not check_tokens():
@@ -124,7 +124,7 @@ def main():
             err_message = f'Сбой в работе программы: {error}'
             if err_message != ERROR_MESSAGE:
                 send_message(bot, err_message)
-                ERROR_MESSAGE = err_message.copy()
+                ERROR_MESSAGE = err_message
         finally:
             time.sleep(RETRY_TIME)
 
