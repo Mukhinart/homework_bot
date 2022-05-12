@@ -37,7 +37,7 @@ def send_message(bot, message):
         )
         bot.send_message(TELEGRAM_CHAT_ID, message)
     except Exception:
-        logger.error('Ошибка отправки сообщения в телеграм')
+        raise Exception('Ошибка отправки сообщения в телеграм')
     else:
         logger.info(
             f'Сообщение "{message}" успешно отправлено'
@@ -104,7 +104,7 @@ def check_tokens():
 
 def main():
     """Основная логика работы бота."""
-    STATUS_MESSAGE = {}
+    STATUS_MESSAGE = ''
     ERROR_MESSAGE = ''
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
@@ -118,7 +118,7 @@ def main():
             current_timestamp = response.get('current_date')
             if message != STATUS_MESSAGE:
                 send_message(bot, message)
-                STATUS_MESSAGE = message.copy()
+                STATUS_MESSAGE = message
         except Exception as error:
             logger.error(error)
             err_message = f'Сбой в работе программы: {error}'
